@@ -11,9 +11,6 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
 
-# Memoria más amable para el plan free
-ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=70.0"
-
 # Usaremos el perfil prod (lee application-prod.yml)
 ENV SPRING_PROFILES_ACTIVE=prod
 

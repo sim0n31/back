@@ -1,4 +1,6 @@
 package com.upc.molinachirinostp.repository;
 
-public interface Universidad {
-}
+import com.upc.molinachirinostp.entity.Universidad;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UniversidadRepository extends JpaRepository<Universidad, Long> {}

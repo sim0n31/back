@@ -1,4 +1,6 @@
 package com.upc.molinachirinostp.repository;
 
-public interface Habilidad {
-}
+import com.upc.molinachirinostp.entity.Habilidad;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface HabilidadRepository extends JpaRepository<Habilidad, Long> {}

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 @Entity @Data @NoArgsConstructor @AllArgsConstructor
 @Table(name="mentor_habilidades")
-public class Mentor_Habilidades {
+public class MentorHabilidad {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

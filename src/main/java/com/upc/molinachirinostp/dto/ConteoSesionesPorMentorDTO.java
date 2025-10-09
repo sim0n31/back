@@ -1,4 +1,8 @@
 package com.upc.molinachirinostp.dto;
 
-public record ConteoSesionesPorMentorDTO() {
-}
+/** Respuesta para reporte: total de sesiones por mentor en un rango */
+public record ConteoSesionesPorMentorDTO(
+        Long idMentor,
+        String mentor,
+        Long totalSesiones
+) {}

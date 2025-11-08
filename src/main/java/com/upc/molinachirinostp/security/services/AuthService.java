@@ -29,8 +29,18 @@ public class AuthService {
         return usuarioRepository.save(u);
     }
 
+    public boolean resetPassword(String email, String newPassword) {
+        return usuarioRepository.findByEmail(email).map(u -> {
+            u.setPassword(passwordEncoder.encode(newPassword));
+            usuarioRepository.save(u);
+            return true;
+        }).orElse(false);
+    }
+
     public String login(String email, String password) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-        return jwtUtils.generateJwtToken(email);
+        // use principal name (email) from the Authentication to build token
+        String principalName = authentication.getName();
+        return jwtUtils.generateJwtToken(principalName);
     }
 }

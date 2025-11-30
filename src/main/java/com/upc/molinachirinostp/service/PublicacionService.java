@@ -61,11 +61,14 @@ public class PublicacionService {
         return publicacionRepository.findByAutorOrderByFechaPublicacionDesc(usuario);
     }
 
+<<<<<<< HEAD
     // Ver publicaciones por autor (alias para compatibilidad con frontend)
     public List<Publicacion> getPorAutor(Long usuarioId) {
         return getPublicacionesByUsuario(usuarioId);
     }
 
+=======
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     // HU21 - Agregar comentario
     @Transactional
     public Comentario agregarComentario(Long publicacionId, Long autorId, String contenido) {

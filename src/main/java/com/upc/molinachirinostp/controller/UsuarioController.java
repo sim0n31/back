@@ -4,8 +4,11 @@ import com.upc.molinachirinostp.entity.Usuario;
 import com.upc.molinachirinostp.repository.UsuarioRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+<<<<<<< HEAD
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+=======
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +23,7 @@ public class UsuarioController {
         this.usuarioRepository = usuarioRepository;
     }
 
+<<<<<<< HEAD
     // Obtener usuario actual autenticado
     @GetMapping("/me")
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
@@ -34,6 +38,11 @@ public class UsuarioController {
     // HU08 - Buscar usuarios
     @GetMapping("/buscar")
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
+=======
+    // HU08 - Buscar usuarios
+    @GetMapping("/buscar")
+    @PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<List<Usuario>> buscarUsuarios(@RequestParam String query) {
         // Búsqueda simple por nombre o email (puedes mejorar con especificaciones)
         List<Usuario> usuarios = usuarioRepository.findAll().stream()
@@ -48,7 +57,11 @@ public class UsuarioController {
 
     // Obtener todos los usuarios (Solo ADMIN)
     @GetMapping
+<<<<<<< HEAD
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<List<Usuario>> getAllUsuarios() {
         List<Usuario> usuarios = usuarioRepository.findAll();
         return ResponseEntity.ok(usuarios);
@@ -56,7 +69,11 @@ public class UsuarioController {
 
     // HU04 - Obtener perfil de usuario
     @GetMapping("/{id}")
+<<<<<<< HEAD
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
+=======
+    @PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<Usuario> getUsuario(@PathVariable Long id) {
         Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -65,7 +82,11 @@ public class UsuarioController {
 
     // HU04 - Editar perfil
     @PutMapping("/{id}")
+<<<<<<< HEAD
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
+=======
+    @PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioActualizado) {
         Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -85,7 +106,11 @@ public class UsuarioController {
 
     // Eliminar usuario (Solo ADMIN)
     @DeleteMapping("/{id}")
+<<<<<<< HEAD
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+=======
+    @PreAuthorize("hasRole('ADMIN')")
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
         usuarioRepository.deleteById(id);
         return ResponseEntity.ok().build();

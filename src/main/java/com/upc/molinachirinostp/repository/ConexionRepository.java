@@ -13,8 +13,11 @@ import java.util.Optional;
 public interface ConexionRepository extends JpaRepository<Conexion, Long> {
     List<Conexion> findByReceptorAndEstado(Usuario receptor, String estado);
     List<Conexion> findBySolicitanteAndEstado(Usuario solicitante, String estado);
+<<<<<<< HEAD
     List<Conexion> findByReceptor(Usuario receptor);
     List<Conexion> findBySolicitante(Usuario solicitante);
+=======
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
 
     @Query("SELECT c FROM Conexion c WHERE (c.solicitante = ?1 OR c.receptor = ?1) AND c.estado = 'ACEPTADA'")
     List<Conexion> findContactosByUsuario(Usuario usuario);

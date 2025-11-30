@@ -13,7 +13,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/publicaciones")
+<<<<<<< HEAD
 @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
+=======
+@PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
 public class PublicacionController {
 
     private final PublicacionService publicacionService;
@@ -47,6 +51,7 @@ public class PublicacionController {
         return ResponseEntity.ok(publicaciones);
     }
 
+<<<<<<< HEAD
     // Ver publicaciones por autor
     @GetMapping("/autor/{usuarioId}")
     public ResponseEntity<List<Publicacion>> getPublicacionesByAutor(@PathVariable Long usuarioId) {
@@ -54,6 +59,8 @@ public class PublicacionController {
         return ResponseEntity.ok(publicaciones);
     }
 
+=======
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     // HU21 - Agregar comentario
     @PostMapping("/{publicacionId}/comentarios")
     public ResponseEntity<Comentario> agregarComentario(

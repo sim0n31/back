@@ -62,10 +62,13 @@ public class PuntuacionService {
         puntuacion.setPuntosComentarios(puntuacion.getPuntosComentarios() + puntos);
         puntuacionRepository.save(puntuacion);
     }
+<<<<<<< HEAD
 
     // Obtener puntos por usuario (devuelve lista para compatibilidad con frontend)
     public java.util.List<Puntuacion> getPuntosPorUsuario(Long usuarioId) {
         Puntuacion puntuacion = getPuntuacion(usuarioId);
         return java.util.Collections.singletonList(puntuacion);
     }
+=======
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
 }

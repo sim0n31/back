@@ -12,7 +12,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/conexiones")
+<<<<<<< HEAD
 @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
+=======
+@PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
 public class ConexionController {
 
     private final ConexionService conexionService;
@@ -51,6 +55,7 @@ public class ConexionController {
         return ResponseEntity.ok(solicitudes);
     }
 
+<<<<<<< HEAD
     // Ver solicitudes recibidas (todas)
     @GetMapping("/recibidas/{usuarioId}")
     public ResponseEntity<List<Conexion>> getSolicitudesRecibidas(@PathVariable Long usuarioId) {
@@ -65,6 +70,8 @@ public class ConexionController {
         return ResponseEntity.ok(solicitudes);
     }
 
+=======
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     // HU07 - Ver lista de contactos
     @GetMapping("/contactos/{usuarioId}")
     public ResponseEntity<List<Usuario>> getContactos(@PathVariable Long usuarioId) {

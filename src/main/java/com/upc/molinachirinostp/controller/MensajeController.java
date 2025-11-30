@@ -11,7 +11,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/mensajes")
+<<<<<<< HEAD
 @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
+=======
+@PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
+>>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
 public class MensajeController {
 
     private final MensajeService mensajeService;

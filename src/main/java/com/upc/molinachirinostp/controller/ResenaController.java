@@ -5,6 +5,7 @@ import com.upc.molinachirinostp.entity.ResenaMentor;
 import com.upc.molinachirinostp.service.ResenaService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/connected/resenas")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
 public class ResenaController {
 
     private final ResenaService resenaService;

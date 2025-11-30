@@ -9,6 +9,14 @@ public class Mentor {
 
     private String bio;
 
+    private String areasExperiencia;
+
+    private Integer anosExperiencia;
+
+    private Double tarifaHora;
+
+    private Boolean disponible = true;
+
     @ManyToOne @JoinColumn(name="id_user")
     private Usuario usuario;   // opcional, recomendado
 }

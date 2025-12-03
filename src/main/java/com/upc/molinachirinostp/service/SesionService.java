@@ -84,25 +84,47 @@ public class SesionService {
     // (recomendados para Controllers)
     // ==============================
     public SesionViewDTO crear(CrearSesionDTO dto) {
-        // Parseo y validaciones básicas
-        LocalDate f = LocalDate.parse(dto.fechaInicio());
-        if (f.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("fecha debe ser hoy o futura");
+        // Validaciones de entrada
+        if (dto.idAlumno() == null) {
+            throw new IllegalArgumentException("El ID del alumno es obligatorio");
+        }
+        if (dto.idMentor() == null) {
+            throw new IllegalArgumentException("El ID del mentor es obligatorio");
+        }
+        if (dto.fechaInicio() == null || dto.fechaInicio().isBlank()) {
+            throw new IllegalArgumentException("La fecha de inicio es obligatoria");
         }
         if (dto.canal() == null || dto.canal().isBlank()) {
-            throw new IllegalArgumentException("canal es obligatorio");
+            throw new IllegalArgumentException("El canal es obligatorio");
         }
         if (dto.estado() == null || dto.estado().isBlank()) {
-            throw new IllegalArgumentException("estado es obligatorio");
+            throw new IllegalArgumentException("El estado es obligatorio");
         }
 
-        // Buscar relaciones
-        Alumno a = alumnoRepo.findById(dto.idAlumno())
-                .orElseThrow(() -> new IllegalArgumentException("alumno not found"));
-        Mentor m = mentorRepo.findById(dto.idMentor())
-                .orElseThrow(() -> new IllegalArgumentException("mentor not found"));
+        // Parseo y validación de fecha
+        LocalDate f;
+        try {
+            f = LocalDate.parse(dto.fechaInicio());
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Formato de fecha inválido. Use formato YYYY-MM-DD (ej: 2025-12-25)");
+        }
 
-        // Guardar
+        if (f.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("La fecha debe ser hoy o futura");
+        }
+
+        // Buscar alumno y mentor - proporcionar errores claros
+        Alumno a = alumnoRepo.findById(dto.idAlumno())
+                .orElseThrow(() -> new IllegalArgumentException("Alumno con ID " + dto.idAlumno() + " no encontrado"));
+        Mentor m = mentorRepo.findById(dto.idMentor())
+                .orElseThrow(() -> new IllegalArgumentException("Mentor con ID " + dto.idMentor() + " no encontrado"));
+
+        // Validar que el mentor esté disponible
+        if (m.getDisponible() != null && !m.getDisponible()) {
+            throw new IllegalArgumentException("El mentor seleccionado no está disponible actualmente");
+        }
+
+        // Guardar sesión
         SesionMentoria s = new SesionMentoria(null, f, dto.canal(), dto.estado(), dto.notas(), a, m);
         SesionMentoria saved = sesionRepo.save(s);
 

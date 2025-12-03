@@ -4,11 +4,10 @@ import com.upc.molinachirinostp.entity.Usuario;
 import com.upc.molinachirinostp.repository.UsuarioRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-<<<<<<< HEAD
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-=======
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class UsuarioController {
         this.usuarioRepository = usuarioRepository;
     }
 
-<<<<<<< HEAD
+
     // Obtener usuario actual autenticado
     @GetMapping("/me")
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
@@ -38,30 +37,22 @@ public class UsuarioController {
     // HU08 - Buscar usuarios
     @GetMapping("/buscar")
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
-=======
-    // HU08 - Buscar usuarios
-    @GetMapping("/buscar")
-    @PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<List<Usuario>> buscarUsuarios(@RequestParam String query) {
-        // Búsqueda simple por nombre o email (puedes mejorar con especificaciones)
-        List<Usuario> usuarios = usuarioRepository.findAll().stream()
-            .filter(u ->
-                (u.getPrimerNombre() != null && u.getPrimerNombre().toLowerCase().contains(query.toLowerCase())) ||
-                (u.getPrimerApellido() != null && u.getPrimerApellido().toLowerCase().contains(query.toLowerCase())) ||
-                (u.getEmail() != null && u.getEmail().toLowerCase().contains(query.toLowerCase()))
-            )
-            .toList();
+        // Búsqueda eficiente usando query de base de datos
+        // Esto evita cargar todos los usuarios en memoria
+        List<Usuario> usuarios = usuarioRepository.buscarPorNombreApellidoOEmail(query);
+
+        // No exponer contraseñas en resultados
+        usuarios.forEach(u -> u.setPassword(null));
+
         return ResponseEntity.ok(usuarios);
     }
 
     // Obtener todos los usuarios (Solo ADMIN)
     @GetMapping
-<<<<<<< HEAD
+
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasRole('ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
+
     public ResponseEntity<List<Usuario>> getAllUsuarios() {
         List<Usuario> usuarios = usuarioRepository.findAll();
         return ResponseEntity.ok(usuarios);
@@ -69,11 +60,9 @@ public class UsuarioController {
 
     // HU04 - Obtener perfil de usuario
     @GetMapping("/{id}")
-<<<<<<< HEAD
+
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
+
     public ResponseEntity<Usuario> getUsuario(@PathVariable Long id) {
         Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -82,14 +71,24 @@ public class UsuarioController {
 
     // HU04 - Editar perfil
     @PutMapping("/{id}")
-<<<<<<< HEAD
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuarioActualizado) {
+        // SEGURIDAD: Verificar que el usuario autenticado solo pueda editar su propio perfil
+        // a menos que sea ADMIN
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String emailAutenticado = authentication.getName();
+
         Usuario usuario = usuarioRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // IMPORTANTE: Prevenir IDOR (Insecure Direct Object Reference)
+        // Solo el mismo usuario o un ADMIN pueden modificar el perfil
+        boolean isAdmin = authentication.getAuthorities().stream()
+            .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!usuario.getEmail().equals(emailAutenticado) && !isAdmin) {
+            return ResponseEntity.status(403).build(); // Forbidden
+        }
 
         // Actualizar campos (sin modificar password ni roles)
         if (usuarioActualizado.getPrimerNombre() != null) usuario.setPrimerNombre(usuarioActualizado.getPrimerNombre());
@@ -101,16 +100,19 @@ public class UsuarioController {
         if (usuarioActualizado.getFotoPerfil() != null) usuario.setFotoPerfil(usuarioActualizado.getFotoPerfil());
 
         Usuario saved = usuarioRepository.save(usuario);
+
+        // No exponer la contraseña en la respuesta
+        saved.setPassword(null);
+
         return ResponseEntity.ok(saved);
     }
 
     // Eliminar usuario (Solo ADMIN)
     @DeleteMapping("/{id}")
-<<<<<<< HEAD
+
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasRole('ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
+
+
     public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
         usuarioRepository.deleteById(id);
         return ResponseEntity.ok().build();

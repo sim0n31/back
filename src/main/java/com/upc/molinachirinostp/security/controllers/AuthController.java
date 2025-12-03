@@ -27,6 +27,11 @@ public class AuthController {
         u.setEmail(req.getEmail());
         u.setPassword(req.getPassword());
         Usuario saved = authService.register(u);
+
+        // IMPORTANTE: Limpiar la contraseña antes de devolver al cliente
+        // Nunca exponer contraseñas encriptadas en respuestas
+        saved.setPassword(null);
+
         return ResponseEntity.ok(saved);
     }
 
@@ -37,11 +42,24 @@ public class AuthController {
     }
 
     // Temporary password reset endpoint for testing. Requires resetSecret match with application property.
+    // WARNING: This endpoint should be disabled in production or protected with proper email verification
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest req, @org.springframework.beans.factory.annotation.Value("${app.resetSecret:dev-reset-secret}") String resetSecret) {
-        if (req.getSecret() == null || !req.getSecret().equals(resetSecret)) {
+        // Validación mejorada y segura
+        if (req.getSecret() == null || req.getSecret().trim().isEmpty()) {
             return ResponseEntity.status(403).body("Invalid reset secret");
         }
+
+        // Usar equals de forma segura (ya protegido del null en el if anterior)
+        if (!req.getSecret().equals(resetSecret)) {
+            return ResponseEntity.status(403).body("Invalid reset secret");
+        }
+
+        // Validar que la nueva contraseña no esté vacía
+        if (req.getNewPassword() == null || req.getNewPassword().trim().isEmpty()) {
+            return ResponseEntity.status(400).body("Password cannot be empty");
+        }
+
         boolean ok = authService.resetPassword(req.getEmail(), req.getNewPassword());
         if (ok) return ResponseEntity.ok("Password updated");
         return ResponseEntity.status(404).body("User not found");

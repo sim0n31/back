@@ -1,7 +1,8 @@
 # --- PostgreSQL (RENDER - BASE DE DATOS EN LA NUBE) ---
-#spring.datasource.url=jdbc:postgresql://dpg-d4kj2ashg0os73aorcdg-a.oregon-postgres.render.com:5432/connected_v2?sslmode=require
-#spring.datasource.username=connected_v2_user
-#spring.datasource.password=cQb2a9G7xIscjzYnNMp8Q46PT9snFfpu
+# Descomenta estas líneas y configura con tus credenciales para producción
+#spring.datasource.url=jdbc:postgresql://YOUR_HOST:5432/YOUR_DATABASE?sslmode=require
+#spring.datasource.username=YOUR_USERNAME
+#spring.datasource.password=YOUR_PASSWORD
 #spring.datasource.driver-class-name=org.postgresql.Driver
 
 # --- Reforzar SSL para conexión segura ---
@@ -23,15 +24,16 @@
 #server.port=${PORT:8080}
 
 # --- JWT (Seguridad) ---
-#app.jwtSecret=ChangeThisSecretInProdMustBe64CharsForHS512AlgorithmSecureKey1234
-#pp.jwtExpirationMs=86400000
-#app.resetSecret=prod-reset-secret-change-this
-#wawawa123
+# IMPORTANTE: Genera una clave segura de 64+ caracteres para HS512
+#app.jwtSecret=CAMBIA_ESTE_SECRET_POR_UNO_SEGURO_DE_AL_MENOS_64_CARACTERES
+#app.jwtExpirationMs=86400000
+#app.resetSecret=CAMBIA_ESTE_SECRET_TAMBIEN
 
 # --- PostgreSQL (Local) ---
-spring.datasource.url=jdbc:postgresql://localhost:5432/basedatos6
-spring.datasource.username=postgres
-spring.datasource.password=Sim0n.15021901#
+# Configura tu base de datos local aquí
+spring.datasource.url=jdbc:postgresql://localhost:5432/YOUR_LOCAL_DATABASE
+spring.datasource.username=YOUR_LOCAL_USERNAME
+spring.datasource.password=YOUR_LOCAL_PASSWORD
 spring.datasource.driver-class-name=org.postgresql.Driver
 
 # --- JPA / Hibernate ---
@@ -49,9 +51,8 @@ spring.datasource.hikari.connection-timeout=30000
 server.port=8080
 
 # --- JWT (Seguridad local) ---
-
-app.jwtSecret=sJOE3NzsOPIctl/RjyLNbuB+kZnnZ1GpEmomYhfeh0vHvntd44953iMP19ijcP0QzWVbvbtBVVGRLNffITfO+Q==
-
+# IMPORTANTE: Cambia estos valores por secretos seguros
+# Puedes generar un secret seguro con: openssl rand -base64 64
+app.jwtSecret=GENERA_TU_PROPIO_SECRET_SEGURO_BASE64_DE_64_CARACTERES_O_MAS
 app.jwtExpirationMs=86400000
-app.resetSecret=dev-reset-secret
-
+app.resetSecret=dev-reset-secret-CAMBIAR-EN-PRODUCCION

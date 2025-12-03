@@ -76,7 +76,7 @@ public class ConexionService {
         return conexionRepository.findByReceptorAndEstado(usuario, "PENDIENTE");
     }
 
-<<<<<<< HEAD
+
     // Ver solicitudes recibidas (todas)
     public List<Conexion> getSolicitudesRecibidas(Long usuarioId) {
         Usuario usuario = usuarioRepository.findById(usuarioId)
@@ -91,8 +91,7 @@ public class ConexionService {
         return conexionRepository.findBySolicitante(usuario);
     }
 
-=======
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
+
     // HU07 - Ver lista de contactos
     public List<Usuario> getContactos(Long usuarioId) {
         Usuario usuario = usuarioRepository.findById(usuarioId)

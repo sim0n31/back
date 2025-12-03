@@ -8,11 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/puntuaciones")
-<<<<<<< HEAD
 @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
-=======
-@PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
 public class PuntuacionController {
 
     private final PuntuacionService puntuacionService;
@@ -27,7 +23,7 @@ public class PuntuacionController {
         Puntuacion puntuacion = puntuacionService.getPuntuacion(usuarioId);
         return ResponseEntity.ok(puntuacion);
     }
-<<<<<<< HEAD
+
 
     // Obtener puntos por usuario
     @GetMapping("/usuario/{usuarioId}")
@@ -35,6 +31,5 @@ public class PuntuacionController {
         java.util.List<Puntuacion> puntuaciones = puntuacionService.getPuntosPorUsuario(usuarioId);
         return ResponseEntity.ok(puntuaciones);
     }
-=======
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
+
 }

@@ -20,11 +20,7 @@ public class OportunidadController {
 
     // HU15 - Recomendación de empleos
     @GetMapping("/empleos")
-<<<<<<< HEAD
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<List<Oportunidad>> getEmpleos() {
         List<Oportunidad> empleos = oportunidadService.getEmpleos();
         return ResponseEntity.ok(empleos);
@@ -32,11 +28,7 @@ public class OportunidadController {
 
     // HU16 - Recomendación de pasantías
     @GetMapping("/pasantias")
-<<<<<<< HEAD
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<List<Oportunidad>> getPasantias() {
         List<Oportunidad> pasantias = oportunidadService.getPasantias();
         return ResponseEntity.ok(pasantias);
@@ -44,11 +36,7 @@ public class OportunidadController {
 
     // HU17 - Recomendación de talleres
     @GetMapping("/talleres")
-<<<<<<< HEAD
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<List<Oportunidad>> getTalleres() {
         List<Oportunidad> talleres = oportunidadService.getTalleres();
         return ResponseEntity.ok(talleres);
@@ -56,11 +44,7 @@ public class OportunidadController {
 
     // HU18 - Eventos
     @GetMapping("/eventos")
-<<<<<<< HEAD
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<List<Oportunidad>> getEventos() {
         List<Oportunidad> eventos = oportunidadService.getEventos();
         return ResponseEntity.ok(eventos);
@@ -68,25 +52,16 @@ public class OportunidadController {
 
     // Obtener todas las oportunidades
     @GetMapping
-<<<<<<< HEAD
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasAnyRole('USER', 'MENTOR', 'ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<List<Oportunidad>> getAllOportunidades() {
         List<Oportunidad> oportunidades = oportunidadService.getAllOportunidades();
         return ResponseEntity.ok(oportunidades);
     }
 
-<<<<<<< HEAD
+
     // Crear oportunidad (Todos los usuarios autenticados pueden crear)
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_MENTOR', 'ROLE_ADMIN')")
-=======
-    // Crear oportunidad (Solo ADMIN)
-    @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<Oportunidad> crearOportunidad(@RequestBody Oportunidad oportunidad) {
         Oportunidad nueva = oportunidadService.crearOportunidad(oportunidad);
         return ResponseEntity.ok(nueva);
@@ -94,11 +69,7 @@ public class OportunidadController {
 
     // Actualizar oportunidad (Solo ADMIN)
     @PutMapping("/{id}")
-<<<<<<< HEAD
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasRole('ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<Oportunidad> actualizarOportunidad(@PathVariable Long id, @RequestBody Oportunidad oportunidad) {
         Oportunidad actualizada = oportunidadService.actualizarOportunidad(id, oportunidad);
         return ResponseEntity.ok(actualizada);
@@ -106,11 +77,7 @@ public class OportunidadController {
 
     // Desactivar oportunidad (Solo ADMIN)
     @DeleteMapping("/{id}")
-<<<<<<< HEAD
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-=======
-    @PreAuthorize("hasRole('ADMIN')")
->>>>>>> 4c40555585e49c001c9ff50bf066e75c03d1aaef
     public ResponseEntity<Void> desactivarOportunidad(@PathVariable Long id) {
         oportunidadService.desactivarOportunidad(id);
         return ResponseEntity.ok().build();
